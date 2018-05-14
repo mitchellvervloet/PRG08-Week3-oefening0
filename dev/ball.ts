@@ -13,16 +13,18 @@ abstract class Ball {
     public maxWidth    : number = 0
     public maxHeight   : number = 0
 
-    constructor() {
+    constructor(minWidth : number, maxWidth : number, type:string = "ball") {
         let content = document.getElementsByTagName("content")[0]
-        this.htmlElement = document.createElement("ball")
+        this.htmlElement = document.createElement(type)
         content.appendChild(this.htmlElement)
 
-        this.maxHeight = window.innerHeight - this.htmlElement.clientHeight
-        this.maxWidth = window.innerWidth - this.htmlElement.clientWidth
-        
-        this.x = Math.random() * this.maxWidth
+        maxWidth -= this.htmlElement.clientWidth
+        this.x = (Math.random() * (maxWidth - minWidth)) + minWidth
         this.y = 100
+
+        this.minWidth   = minWidth
+        this.maxWidth   = maxWidth
+        this.maxHeight  = window.innerHeight    - this.htmlElement.clientHeight
     }
 
     abstract update() : void

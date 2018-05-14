@@ -10,7 +10,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 var Ball = (function () {
-    function Ball() {
+    function Ball(minWidth, maxWidth, type) {
+        if (type === void 0) { type = "ball"; }
         this.gravity = 0.1;
         this.friction = 0.9;
         this.x = 0;
@@ -21,12 +22,14 @@ var Ball = (function () {
         this.maxWidth = 0;
         this.maxHeight = 0;
         var content = document.getElementsByTagName("content")[0];
-        this.htmlElement = document.createElement("ball");
+        this.htmlElement = document.createElement(type);
         content.appendChild(this.htmlElement);
-        this.maxHeight = window.innerHeight - this.htmlElement.clientHeight;
-        this.maxWidth = window.innerWidth - this.htmlElement.clientWidth;
-        this.x = Math.random() * this.maxWidth;
+        maxWidth -= this.htmlElement.clientWidth;
+        this.x = (Math.random() * (maxWidth - minWidth)) + minWidth;
         this.y = 100;
+        this.minWidth = minWidth;
+        this.maxWidth = maxWidth;
+        this.maxHeight = window.innerHeight - this.htmlElement.clientHeight;
     }
     Ball.prototype.draw = function () {
         this.htmlElement.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
@@ -36,8 +39,8 @@ var Ball = (function () {
 var Main = (function () {
     function Main() {
         this.balls = [];
-        this.balls.push(new MoonBall());
-        this.balls.push(new SpaceBall());
+        this.balls.push(new MoonBall(0, window.innerWidth / 2));
+        this.balls.push(new SpaceBall(window.innerWidth / 2, window.innerWidth));
         this.gameLoop();
     }
     Main.prototype.gameLoop = function () {

@@ -4,8 +4,8 @@ class Main {
     
     constructor() {
         
-        this.balls.push(new MoonBall())
-        this.balls.push(new SpaceBall())
+        this.balls.push(new MoonBall(0, window.innerWidth/2))
+        this.balls.push(new SpaceBall(window.innerWidth/2, window.innerWidth))
 
         this.gameLoop()
     }
