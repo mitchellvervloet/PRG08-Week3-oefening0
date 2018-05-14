@@ -14,6 +14,7 @@ abstract class Ball {
     public maxHeight   : number = 0
 
     constructor(minWidth : number, maxWidth : number, type:string = "ball") {
+
         let content = document.getElementsByTagName("content")[0]
         this.htmlElement = document.createElement(type)
         content.appendChild(this.htmlElement)

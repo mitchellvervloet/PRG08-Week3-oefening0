@@ -56,51 +56,75 @@ var Main = (function () {
 window.addEventListener("load", function () { return new Main(); });
 var MoonBall = (function (_super) {
     __extends(MoonBall, _super);
-    function MoonBall() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function MoonBall(minwidth, maxwidth) {
+        var _this = _super.call(this, minwidth, maxwidth) || this;
+        _this.behaviour = new Bouncing(_this);
+        return _this;
     }
     MoonBall.prototype.update = function () {
-        if (this.x < this.minWidth) {
-            this.x = this.minWidth;
-            this.speedX *= -1;
-            this.speedX *= this.friction;
-        }
-        if (this.x > this.maxWidth) {
-            this.x = this.maxWidth;
-            this.speedX *= -1;
-            this.speedX *= this.friction;
-        }
-        if (this.y + this.speedY > this.maxHeight) {
-            this.y = this.maxHeight;
-            this.speedY *= -1;
-            this.speedY *= this.friction;
-            this.speedX *= this.friction;
-        }
-        else {
-            this.speedY += this.gravity;
-        }
-        this.x += this.speedX;
-        this.y += this.speedY;
+        this.behaviour.update();
         this.draw();
     };
     return MoonBall;
 }(Ball));
 var SpaceBall = (function (_super) {
     __extends(SpaceBall, _super);
-    function SpaceBall() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function SpaceBall(minwidth, maxwidth) {
+        var _this = _super.call(this, minwidth, maxwidth) || this;
+        _this.behavioiur = new Floating(_this);
+        return _this;
     }
     SpaceBall.prototype.update = function () {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if (this.x < this.minWidth || this.x > this.maxWidth) {
-            this.speedX *= -1;
-        }
-        if (this.y < 0 || this.y > this.maxHeight) {
-            this.speedY *= -1;
-        }
+        this.behavioiur.update();
         this.draw();
     };
     return SpaceBall;
 }(Ball));
+var Bouncing = (function () {
+    function Bouncing(b) {
+        console.log('bouncezzz');
+        this.ball = b;
+    }
+    Bouncing.prototype.update = function () {
+        if (this.ball.x < this.ball.minWidth) {
+            this.ball.x = this.ball.minWidth;
+            this.ball.speedX *= -1;
+            this.ball.speedX *= this.ball.friction;
+        }
+        if (this.ball.x > this.ball.maxWidth) {
+            this.ball.x = this.ball.maxWidth;
+            this.ball.speedX *= -1;
+            this.ball.speedX *= this.ball.friction;
+        }
+        if (this.ball.y + this.ball.speedY > this.ball.maxHeight) {
+            this.ball.y = this.ball.maxHeight;
+            this.ball.speedY *= -1;
+            this.ball.speedY *= this.ball.friction;
+            this.ball.speedX *= this.ball.friction;
+        }
+        else {
+            this.ball.speedY += this.ball.gravity;
+        }
+        this.ball.x += this.ball.speedX;
+        this.ball.y += this.ball.speedY;
+    };
+    return Bouncing;
+}());
+var Floating = (function () {
+    function Floating(b) {
+        console.log('floatingzzz');
+        this.ball = b;
+    }
+    Floating.prototype.update = function () {
+        this.ball.x += this.ball.speedX;
+        this.ball.y += this.ball.speedY;
+        if (this.ball.x < this.ball.minWidth || this.ball.x > this.ball.maxWidth) {
+            this.ball.speedX *= -1;
+        }
+        if (this.ball.y < 0 || this.ball.y > this.ball.maxHeight) {
+            this.ball.speedY *= -1;
+        }
+    };
+    return Floating;
+}());
 //# sourceMappingURL=main.js.map

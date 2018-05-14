@@ -1,0 +1,5 @@
+interface Movement {
+
+    update():void
+
+}
